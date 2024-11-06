@@ -13,10 +13,10 @@ Vagrant.configure("2") do |config|
     cloud.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
       sudo apt-get install -y python3-dnspython python3-pip python3-venv ansible sshpass
-      ssh-keyscan -H 192.168.56.110 >> ~/.ssh/known_hosts
+      # ssh-keyscan -H 192.168.56.110 >> ~/.ssh/known_hosts
       python3 -m venv myenv
       source myenv/bin/activate
-      pip install --upgrade dnspython ansible
+      myenv/bin/pip install --upgrade dnspython ansible
     SHELL
   end
 end
