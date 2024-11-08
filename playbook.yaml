@@ -1,6 +1,6 @@
 
-- hosts: all
+- hosts: server
   become: true
   
   roles:
-    - setup
+    - ./roles/setup
