@@ -21,9 +21,9 @@ PHP
 
 wp core install --url=$DOMAIN_NAME \
                 --title="Inception" \
-                --admin_name=bbrahim \
+                --admin_name=obeaj \
                 --admin_password=admin@42 \
-                --admin_email=bbrahim@student.1337.ma \
+                --admin_email=obeaj@student.1337.ma \
                 --path=/var/www/html/ \
                 --allow-root
 

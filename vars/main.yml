@@ -1,0 +1,47 @@
+# WordPress Configuration
+wordpress_db_name: "wordpress"
+wordpress_db_user: "wp_user"
+wordpress_db_password: "password"
+wordpress_table_prefix: "wp_"
+
+# MariaDB Configuration
+mariadb_root_password: "secure_root_password"
+mariadb_user: "{{ wordpress_db_user }}"
+mariadb_password: "{{ wordpress_db_password }}"
+mariadb_database: "{{ wordpress_db_name }}"
+
+# Nginx Configuration
+nginx_domain: "obeaj.42.fr"
+nginx_ssl_cert: "/etc/nginx/ssl/inception.crt"
+nginx_ssl_key: "/etc/nginx/ssl/inception.key"
+
+# Redis Configuration
+redis_host: "redis"
+redis_port: "6379"
+
+# FTP Configuration
+ftp_user: "client"
+ftp_password: "pass"
+ftp_path: "/home/obeaj/ftp"
+
+# Volume Paths
+volume_base_path: "/Users/obeaj/Desktop/data"
+wordpress_volume_path: "{{ volume_base_path }}/wordpress_volume"
+database_volume_path: "{{ volume_base_path }}/database_volume"
+
+# Network Configuration
+docker_network_name: "my_network"
+docker_network_driver: "bridge"
+
+# Service Ports
+nginx_port: "443"
+mariadb_port: "3306"
+wordpress_port: "9000"
+redis_port: "6379"
+adminer_port: "8080"
+cadvisor_port: "8081"
+website_port: "82"
+ftp_ports:
+  - "20:20"
+  - "21:21"
+  - "40000-40005:40000-40005"

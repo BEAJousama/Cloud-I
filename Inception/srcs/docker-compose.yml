@@ -9,13 +9,13 @@ volumes:
     driver: local
     driver_opts:
        type: none
-       device: /Users/bbrahim/Desktop/data/wordpress_volume
+       device: /Users/obeaj/Desktop/data/wordpress_volume
        o: bind
   database_volume:
     driver: local
     driver_opts:
        type: none
-       device: /Users/bbrahim/Desktop/data/database_volume
+       device: /Users/obeaj/Desktop/data/database_volume
        o: bind
 
 services:
@@ -90,7 +90,7 @@ services:
      - "21:21"
      - "40000-40005:40000-40005"
     volumes:
-     - wordpress_volume:/home/bbrahim/ftp
+     - wordpress_volume:/home/obeaj/ftp
 
   adminer:
     build: ./requirements/bonus/adminer

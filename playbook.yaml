@@ -1,0 +1,49 @@
+- name: Deploy Inception to Digital Ocean
+  hosts: digitalocean
+  become: yes
+  vars_files:
+    - vars/main.yml
+  
+  tasks:
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - docker.io
+        - docker-compose
+        - python3-pip
+        
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+        
+    - name: Create project directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "/opt/inception"
+        - "/opt/inception/mariadb"
+        - "/opt/inception/nginx"
+        - "/opt/inception/wordpress"
+        
+    - name: Copy docker-compose file
+      template:
+        src: templates/docker-compose.yml.j2
+        dest: /opt/inception/docker-compose.yml
+        
+    - name: Copy environment file
+      template:
+        src: templates/.env.j2
+        dest: /opt/inception/.env
+        
+    - name: Deploy services
+      docker_compose:
+        project_src: /opt/inception
+        state: present
+      register: output

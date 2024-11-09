@@ -335,7 +335,7 @@ Dockerfiles are how we containerize our application, or how we build a new conta
                 driver: local
                 driver_opts:
                     type: none
-                    device: /Users/bbrahim/Desktop/data/wordpress_volume
+                    device: /Users/obeaj/Desktop/data/wordpress_volume
                     o: bind
 
     The <container_path> is the path inside the container where the data will be mounted, and the driver field specifies the type of volume to use.
@@ -425,14 +425,14 @@ OpenSSL is a widely-used open-source implementation of the Secure Sockets Layer 
             index index.php index.html index.htm;
             - The index directive sets the default index files to index.php, index.html, and index.htm, in that order.
 
-            ssl_certificate /etc/ssl/certs/bbrahim.crt;
+            ssl_certificate /etc/ssl/certs/obeaj.crt;
             - The ssl_certificate directive specifies the location of the SSL certificate file that will be used for the HTTPS connection.
-            ssl_certificate_key /etc/ssl/private/bbrahim.key;
+            ssl_certificate_key /etc/ssl/private/obeaj.key;
             - The ssl_certificate_key directive specifies the location of the private key for the SSL certificate.
             ssl_protocols TLSv1.3;
             - The ssl_protocols directive specifies which SSL/TLS protocol versions should be enabled for the connection.
 
-            server_name $DOMAIN_NAME www.bbrahim.42.fr;
+            server_name $DOMAIN_NAME www.obeaj.42.fr;
             - The "server_name" directive specifies the domain name(s) that this server block should respond to.
             location / {
                 try_files $uri $uri/ /index.php?$args;
@@ -520,15 +520,15 @@ FastCGI (Fast Common Gateway Interface) is a protocol that allows web servers to
 
         wp core install --url=$DOMAIN_NAME \
                         --title="Inception" \
-                        --admin_name=bbrahim \
+                        --admin_name=obeaj \
                         --admin_password=admin@42 \
-                        --admin_email=bbrahim@student.1337.ma --path=/var/www/html/ --allow-root
+                        --admin_email=obeaj@student.1337.ma --path=/var/www/html/ --allow-root
         - The command wp core install is used to install the WordPress core files, and set up the initial configuration for a new WordPress site.
             - `--url=$DOMAIN_NAME` is used to set the URL of the website, which will be used to access the site.
             - `--title="Inception"` sets the title of the website.
-            - `--admin_name=bbrahim` sets the username for the administrator account of the website.
+            - `--admin_name=obeaj` sets the username for the administrator account of the website.
             - `--admin_password=admin@42` sets the password for the administrator account of the website.
-            - `--admin_email=bbrahim@student.1337.ma` sets the email address for the administrator account of the website.
+            - `--admin_email=obeaj@student.1337.ma` sets the email address for the administrator account of the website.
             - `--path=/var/www/html/` specifies the path where the WordPress files are located.
             - `--allow-root` allows the command to be executed with root privileges.
 
@@ -570,13 +570,13 @@ MariaDB is a database(A database is a place to store information that you can qu
         CREATE DATABASE IF NOT EXISTS ma_base;
         - Creates a new database named "ma_base" if it does not already exist.
         - The "IF NOT EXISTS" clause is used to prevent an error from being generated if a database with the same name already exists.
-        CREATE USER 'bbrahim' IDENTIFIED BY 'user42';
-        - Creates a new user named "bbrahim" with the password "user42" in MySQL.
-        GRANT ALL PRIVILEGES ON ma_base.* TO 'bbrahim'@'%';
+        CREATE USER 'obeaj' IDENTIFIED BY 'user42';
+        - Creates a new user named "obeaj" with the password "user42" in MySQL.
+        GRANT ALL PRIVILEGES ON ma_base.* TO 'obeaj'@'%';
         - The "GRANT" statement which is used to grant privileges to a user.
         - The "ALL PRIVILEGES" option grants all available privileges on the specified object, in this case, the "ma_base" database.
         - The ".*" after the database name means that all tables within the "ma_base" database are included.
-        - The "TO" clause is followed by the user that the privileges are being granted to, in this case, 'bbrahim'.
+        - The "TO" clause is followed by the user that the privileges are being granted to, in this case, 'obeaj'.
         - The "@" sign is used to specify the hostname that the user is connecting from. In this case, the hostname is '%' which means that the user can connect from any host, it is a wildcard that matches any hostname.
         ALTER USER 'root'@'localhost' IDENTIFIED BY 'root42';
         - The "ALTER USER" statement is used to modify an existing user account.
@@ -675,7 +675,7 @@ vsftpd can be configured through the use of a configuration file, typically loca
         - Enable the ability of local users to log in to the FTP server.
         allow_writeable_chroot=YES
         - Is used to allow users to write to their home directories when they are chrooted (jailed)(When a user is chrooted, they can only access files and directories within their home directory and its subdirectories) to their home directory.
-        local_root=/home/bbrahim/ftp
+        local_root=/home/obeaj/ftp
         - Is used to specify the directory that the users will be chrooted to, it's also known as the root directory of the FTP service.
         pasv_enable=YES
         - Is used to enable or disable the passive mode in the FTP server.
