@@ -3,4 +3,5 @@
   become: true
   
   roles:
-    - ./roles/setup
+    - ./roles/droplet
+    # - ./roles/setup
