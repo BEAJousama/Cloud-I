@@ -4,4 +4,9 @@
   
   roles:
     - ./roles/droplet
-    # - ./roles/setup
+
+- hosts: created_droplets
+  become: true
+
+  roles:
+    - ./roles/setup
