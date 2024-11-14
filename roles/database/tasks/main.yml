@@ -1,4 +1,17 @@
----
-# tasks file for database
-- name: Setup MariaDB
-  command: docker-compose -f Inception/srcs/docker-compose.yml up -d mariadb
+
+- name: Create base data directory
+  command: mkdir -p /Users/bbrahim/Desktop/data
+
+- name: Create database volume directory
+  command: mkdir -p /Users/bbrahim/Desktop/data/database_volume
+
+- name: Start MariaDB using Docker Compose
+  command: docker-compose -f ./Inception/srcs/docker-compose.yml up -d mariadb
+
+- name: Show Mariadb Docker logs
+  shell: docker logs mariadb --tail 100
+  register: mariadb_logs
+
+- name: Display MariaDB logs
+  debug:
+    msg: "{{ mariadb_logs.stdout }}"
