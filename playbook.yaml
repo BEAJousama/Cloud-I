@@ -10,3 +10,6 @@
 
   roles:
     - ./roles/setup
+    - ./roles/database
+    # - ./roles/webserver
+    # - ./roles/wordpress

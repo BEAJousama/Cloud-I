@@ -41,16 +41,15 @@
     name: python3-docker
     state: present
 
-# - name: Pull default Docker image
-#   community.docker.docker_image:
-#     name: "{{ default_container_image }}"
-#     tag: latest
-#     source: pull
-  
-# - name: Create default containers
-#   community.docker.docker_container:
-#     name: "{{ default_container_name }}{{ item }}"
-#     image: "{{ default_container_image }}"
-#     command: "{{ default_container_command }}"
-#     state: present
-#   with_sequence: count={{ container_count }}
+- name: Install docker-compose
+  remote_user: ubuntu
+  get_url: 
+    url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+
+- name: Copy directory to remote host
+  copy:
+    src: ./Inception
+    dest: /
+    remote_src: yes

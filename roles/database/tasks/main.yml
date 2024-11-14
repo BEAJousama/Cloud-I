@@ -1,2 +1,4 @@
 ---
 # tasks file for database
+- name: Setup MariaDB
+  command: docker-compose -f Inception/srcs/docker-compose.yml up -d mariadb
