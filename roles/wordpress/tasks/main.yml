@@ -3,7 +3,7 @@
   command: mkdir -p /Users/bbrahim/Desktop/data/wordpress_volume
 
 - name: Start Wordpress using Docker Compose
-  command: docker-compose -f ./Inception/srcs/docker-compose.yml up -d wordpress
+  command: docker-compose -f ../Inception/srcs/docker-compose.yml up -d wordpress
 
 - name: Show Wordpress Docker logs
   shell: docker logs wordpress --tail 100

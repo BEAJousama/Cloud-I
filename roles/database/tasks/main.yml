@@ -6,7 +6,7 @@
   command: mkdir -p /Users/bbrahim/Desktop/data/database_volume
 
 - name: Start MariaDB using Docker Compose
-  command: docker-compose -f ./Inception/srcs/docker-compose.yml up -d mariadb
+  command: docker-compose -f ../Inception/srcs/docker-compose.yml up -d mariadb
 
 - name: Show Mariadb Docker logs
   shell: docker logs mariadb --tail 100

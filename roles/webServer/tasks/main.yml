@@ -1,6 +1,6 @@
 
 - name: Start Ngnix using Docker Compose
-  command: docker-compose -f ./Inception/srcs/docker-compose.yml up -d ngnix
+  command: docker-compose -f ../Inception/srcs/docker-compose.yml up -d ngnix
 
 - name: Show Ngnix Docker logs
   shell: docker logs nginx --tail 100
