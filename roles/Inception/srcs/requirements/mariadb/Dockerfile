@@ -10,7 +10,7 @@ COPY ./conf/create_db.sql ./
 
 COPY ./conf/50-server.cnf ./etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start && mysql -uroot < create_db.sql
+RUN service mysql start && mysql -u root < create_db.sql
 
 ENTRYPOINT ["/usr/bin/dumb-init"]
 
