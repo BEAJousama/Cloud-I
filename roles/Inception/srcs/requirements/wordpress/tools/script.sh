@@ -19,13 +19,6 @@ define('DB_HOST', '$HOST');
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
-define('WP_CACHE', true);
-define('WP_REDIS_HOST', 'redis');
-define('WP_REDIS_PORT', 6379);
-define('WP_REDIS_TIMEOUT', 1);
-define('WP_REDIS_READ_TIMEOUT', 1);
-define('WP_REDIS_DATABASE', 0);
-
 \$table_prefix = 'wp_';
 define('WP_DEBUG', false);
 
@@ -56,11 +49,6 @@ wp user create boumlikbrahim \
     --allow-root \
     --path=/var/www/html/
 
-# Install and activate Redis cache plugin
-wp plugin install redis-cache --path=/var/www/html --activate --allow-root
-
-# Enable Redis
-wp redis enable --path=/var/www/html/ --allow-root
 
 # Stop PHP-FPM
 service php7.3-fpm stop
