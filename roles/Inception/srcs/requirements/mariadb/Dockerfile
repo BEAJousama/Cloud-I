@@ -6,12 +6,12 @@ RUN apt-get -y update && apt-get -y install mariadb-server dumb-init
 
 EXPOSE 3306
 
-COPY ./conf/create_db.sql ./
-
 COPY ./conf/50-server.cnf ./etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start && mysql -u root < create_db.sql
+COPY ./tools /
+
+RUN chmod +x /script.sh
 
 ENTRYPOINT ["/usr/bin/dumb-init"]
 
-CMD ["mysqld"]
+CMD ["./script.sh"]
