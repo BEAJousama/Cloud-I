@@ -1,0 +1,12 @@
+- hosts: server
+  become: true
+  roles:
+    - droplet
+
+- hosts: created_droplets
+  become: true
+  roles:
+    - setup
+    - database
+    - wordpress
+    - webserver

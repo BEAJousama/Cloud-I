@@ -1,0 +1,64 @@
+---
+# tasks file for setup
+
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: yes
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Update apt and install Docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: yes
+  
+- name: Install Docker Module for Python
+  apt:
+    name: python3-docker
+    state: present
+
+- name: Install docker-compose
+  remote_user: ubuntu
+  get_url: 
+    url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+
+- name: Copy directory to remote host
+  copy:
+    src: ../Inception
+    dest: /
+    # remote_src: yes
+
+- name: Create Volume Directory for data
+  command: mkdir -p /Users/bbrahim/Desktop/data
+
+- name: Create Volume Directory for database
+  command: mkdir -p /Users/bbrahim/Desktop/data/database_volume 
+
+- name: Create Volume Directory for WordPress
+  command: mkdir -p /Users/bbrahim/Desktop/data/wordpress_volume

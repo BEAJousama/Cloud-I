@@ -1,0 +1,14 @@
+
+- name: Create Wordpress volume directory
+  command: mkdir -p /Users/bbrahim/Desktop/data/wordpress_volume
+
+- name: Start Wordpress using Docker Compose
+  command: docker-compose -f ../Inception/srcs/docker-compose.yml up -d wordpress
+
+- name: Show Wordpress Docker logs
+  shell: docker logs wordpress --tail 100
+  register: wordpress_logs
+
+- name: Display Wordpress logs
+  debug:
+    msg: "{{ wordpress_logs.stdout }}"
