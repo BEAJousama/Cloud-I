@@ -5,7 +5,12 @@ server {
     root /var/www/html/;
     index index.php index.html index.htm;
 
-    server_name bbcloud1.duckdns.org;
+    server_name obeaj.com www.obeaj.com;
+    
+    ssl on;
+
+    ssl_certificate /etc/ssl/certs/www_obeaj_com.crt;
+    ssl_certificate_key /etc/ssl/certs/obeaj.com.key;
     location / {
         try_files $uri $uri/ /index.php?$args;
     } 

@@ -10,5 +10,5 @@
   debug:
     msg: "{{ ngnix_logs.stdout }}"
 
-- name: Setup Certbot
-  command: docker exec -it nginx certbot --nginx --non-interactive --agree-tos -m boumlik01brahim@gmail.com --domains bbcloud1.duckdns.org
+# - name: Setup Certbot
+#   command: docker exec -it nginx certbot --nginx --non-interactive --agree-tos -m oussama.beaj2@gmail.com --domains www.obeaj.com

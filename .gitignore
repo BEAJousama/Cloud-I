@@ -1,3 +1,6 @@
 .vscode
+.env
 .vagrant
 .vscode/
+*.key
+*.crt

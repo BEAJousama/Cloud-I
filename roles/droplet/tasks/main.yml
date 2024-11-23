@@ -2,13 +2,13 @@
   community.digitalocean.digital_ocean_droplet:
     state: present
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
-    name: mydroplet
+    name: mydroplet1
     unique_name: true
     size: s-1vcpu-1gb
     region: sfo3
     image: ubuntu-20-04-x64
     wait_timeout: 500
-    ssh_keys: [ '29:75:f5:6a:07:49:94:28:e3:ed:a7:60:61:0c:9f:ea' ]
+    ssh_keys: [ '29:75:f5:6a:07:49:94:28:e3:ed:a7:60:61:0c:9f:ea', '9a:e9:a2:73:34:c9:30:42:28:2b:4f:b5:c1:b3:c8:b2' ]
   register: my_droplet
 
 - name: Show Droplet info
@@ -24,3 +24,37 @@
     groups: created_droplets
     ansible_user: root
     ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+
+- name: Add domain to DigitalOcean
+  community.digitalocean.digital_ocean_domain:
+    state: present
+    name: obeaj.com
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+
+- name: Add A record for root domain
+  community.digitalocean.digital_ocean_domain_record:
+    state: present
+    domain: obeaj.com
+    type: A
+    name: "@"
+    data: "{{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+
+- name: Add A record for www subdomain
+  community.digitalocean.digital_ocean_domain_record:
+    state: present
+    domain: obeaj.com
+    type: A
+    name: "www"
+    data: "{{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+
+- name: Verify domain records
+  community.digitalocean.digital_ocean_domain_record_info:
+    domain: obeaj.com
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+  register: domain_records
+
+- name: Display domain records
+  debug:
+    var: domain_records
