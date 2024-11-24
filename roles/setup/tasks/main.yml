@@ -1,11 +1,8 @@
----
-# tasks file for setup
-
 
 - name: Wait for apt locks
   shell: while fuser /var/lib/dpkg/lock >/dev/null 2>&1 || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do sleep 1; done
   changed_when: false
-      
+
 - name: Clear apt lock if needed
   shell: |
     rm -f /var/lib/apt/lists/lock
@@ -66,7 +63,6 @@
   copy:
     src: ../Inception
     dest: /
-    # remote_src: yes
 
 - name: Create Volume Directory for data
   command: mkdir -p /Users/bbrahim/Desktop/data

@@ -1,14 +1,3 @@
 
 - name: Start Ngnix using Docker Compose
   command: docker-compose -f ../Inception/srcs/docker-compose.yml up -d ngnix
-
-- name: Show Ngnix Docker logs
-  shell: docker logs nginx --tail 100
-  register: ngnix_logs
-
-- name: Display Ngnix logs
-  debug:
-    msg: "{{ ngnix_logs.stdout }}"
-
-# - name: Setup Certbot
-#   command: docker exec -it nginx certbot --nginx --non-interactive --agree-tos -m oussama.beaj2@gmail.com --domains www.obeaj.com
