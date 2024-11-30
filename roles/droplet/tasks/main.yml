@@ -1,26 +1,44 @@
+- name: Delete existing Droplet
+  community.digitalocean.digital_ocean_droplet:
+    state: absent
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+    name: inception
+    unique_name: true
+
+- name: Delete existing domain records
+  community.digitalocean.digital_ocean_domain:
+    state: absent
+    name: obeaj.com
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+  ignore_errors: yes
+
+- name: Wait for deletion to complete
+  ansible.builtin.pause:
+    seconds: 30
+
 - name: Create a new Droplet
   community.digitalocean.digital_ocean_droplet:
     state: present
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
-    name: mydroplet1
+    name: inception
     unique_name: true
     size: s-1vcpu-1gb
     region: sfo3
     image: ubuntu-20-04-x64
     wait_timeout: 500
-    ssh_keys: [ '29:75:f5:6a:07:49:94:28:e3:ed:a7:60:61:0c:9f:ea', '9a:e9:a2:73:34:c9:30:42:28:2b:4f:b5:c1:b3:c8:b2' ]
-  register: my_droplet
+    ssh_keys: [ '29:75:f5:6a:07:49:94:28:e3:ed:a7:60:61:0c:9f:ea', 'a2:27:50:c9:1f:8f:dd:75:08:c5:2d:e4:97:33:2c:e8' ]
+  register: inception
 
 - name: Show Droplet info
   ansible.builtin.debug:
     msg: |
-      Droplet ID is {{ my_droplet.data.droplet.id }}
-      First Public IPv4 is {{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}
-      First Private IPv4 is {{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'private')).0.ip_address | default('<none>', true) }}
+      Droplet ID is {{ inception.data.droplet.id }}
+      First Public IPv4 is {{ (inception.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}
+      First Private IPv4 is {{ (inception.data.droplet.networks.v4 | selectattr('type', 'equalto', 'private')).0.ip_address | default('<none>', true) }}
 
 - name: Add Droplet to Ansible inventory
   add_host:
-    name: "{{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
+    name: "{{ (inception.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
     groups: created_droplets
     ansible_user: root
     ansible_ssh_private_key_file: "~/.ssh/id_rsa"
@@ -37,7 +55,7 @@
     domain: obeaj.com
     type: A
     name: "@"
-    data: "{{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
+    data: "{{ (inception.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
 
 - name: Add A record for www subdomain
@@ -46,7 +64,7 @@
     domain: obeaj.com
     type: A
     name: "www"
-    data: "{{ (my_droplet.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
+    data: "{{ (inception.data.droplet.networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address }}"
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
 
 - name: Verify domain records

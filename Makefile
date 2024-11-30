@@ -26,3 +26,11 @@ run-commands:
 	pip install ansible && \
 	export DO_API_TOKEN=$(shell grep DO_API_TOKEN roles/Inception/srcs/.env | cut -d '=' -f2) && \
 	ansible-playbook playbook.yaml -i inventory.ini
+
+clean:
+	rm -rf venv
+	rm -rf roles/Inception/srcs/.$(ENV_FILE)
+	rm -rf $(CERT_DIR)/$(KEY_NAME)
+	rm -rf $(CERT_DIR)/$(CERT_NAME)
+
+.PHONY: all setup copy-files run-commands clean
