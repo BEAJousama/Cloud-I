@@ -19,11 +19,10 @@ copy-files:
 	cp $(HOME_DIR)/certs/$(CERT_NAME) $(CERT_DIR)/$(CERT_NAME) # Replace with actual cert path
 	cp $(HOME_DIR)/certs/$(ENV_FILE) roles/Inception/srcs/.$(ENV_FILE)
 
-DO_API_TOKEN := $(shell grep DO_API_TOKEN roles/Inception/srcs/.env | cut -d '=' -f2)
 
 run-commands:
 	python3 -m venv venv && \
 	. venv/bin/activate && \
 	pip install ansible && \
-	export DO_API_TOKEN=$(DO_API_TOKEN) && \
+	export DO_API_TOKEN=$(shell grep DO_API_TOKEN roles/Inception/srcs/.env | cut -d '=' -f2) && \
 	ansible-playbook playbook.yaml -i inventory.ini
